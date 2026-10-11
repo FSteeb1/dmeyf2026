@@ -1,6 +1,6 @@
 # Primera Competencia DMEyF 2026 — Fernando Steeb
 
-Entrega final para la competencia 1: un ensamble a partir del promedio de las probabilidades de 27 modelos LightGBM. La entrega final toma los 11.000 clientes con mayor probabilidad.
+Entrega final para la competencia 1: un ensamble a partir del promedio de las probabilidades de 27 modelos LightGBM, tomando como punto de corte los 11.000 clientes con mayor probabilidad.
 
 | | |
 |---|---|
@@ -8,9 +8,9 @@ Entrega final para la competencia 1: un ensamble a partir del promedio de las pr
 | Clientes | 11.000, sin encabezado, uno por línea |
 | SHA-256 | `2a5a508683301735e4f4b5ab07ccc50c102459479691baf9211e68c3e496663a` |
 
-## Qué modelos uso
+## Descripción del ensamble final
 
-Entreno con marzo, abril, mayo y junio, con BAJA+1 y BAJA+2 como positivos. Todos los modelos usan los mismos hiperparámetros. Solo cambia la semilla. Los hiperparámetros son fijos (están en `3_modelos/comun.py`).
+Entreno con marzo, abril, mayo y junio, con BAJA+1 y BAJA+2 como positivos. Todos los modelos usan los mismos hiperparámetros (están en `3_modelos/comun.py`). Solo cambia la semilla. 
 
 Los 27 modelos se reparten en tres familias. Cada una agrega features a la anterior:
 
@@ -18,7 +18,7 @@ Los 27 modelos se reparten en tres familias. Cada una agrega features a la anter
 - **historia_comportamiento** (9 modelos): lo anterior más features de cada cliente contra su propio pasado, de entradas y salidas de dinero, de cantidad de productos y canales, y relaciones entre productos del mismo mes (`features_comportamiento.py`).
 - **historia_comportamiento_flujos** (13 modelos): lo anterior más las entradas y salidas desglosadas por tipo, el saldo neto y qué producto dejó de tener (`features_flujos.py`).
 
-Los montos en pesos cambian mes a mes por la inflación, y en junio por el aguinaldo. Para que se puedan comparar entre meses, agrego una copia de cada monto con su posición dentro del mes: los positivos entre 0 y 1, los negativos entre −1 y 0, y el cero queda en cero.
+Para facilitar la comparación entre meses y controlar el drift producto de la inflación y el aguinaldo de junio, agregué una copia de cada monto con su posición dentro del mes: los positivos entre 0 y 1, los negativos entre −1 y 0, y el cero queda en cero.
 
 ## Cómo replicar la entrega
 
@@ -33,7 +33,7 @@ pip install -r requirements.txt
 3. **Modelos.** En cada carpeta de `3_modelos/`, `python entrenar.py`. Cada familia de modelos se entrenó en varias corridas (están en `CORRIDAS`, dentro de cada `entrenar.py`). Cada corrida arma el dataset de LightGBM con la primera semilla que entrena, así que para obtener exactamente las mismas probabilidades hay que respetar las corridas y el orden de las semillas. Las probabilidades quedan en `probabilidades/`.
 4. **Ensamble.** `python 4_ensamble/armar_ensamble.py`. Promedia los 27 modelos, toma los 11.000 clientes con mayor probabilidad (ante empate, por `numero_de_cliente`), valida el formato y compara el SHA-256 con el de la entrega.
 
-Las probabilidades de los 27 modelos ya están en `probabilidades/`, así que el paso 4 se puede correr directamente. Para comprobar que el código reproduce un modelo sin reentrenar los 27, `3_modelos/verificar_semilla.py` reentrena la primera semilla de una corrida y la compara con la guardada:
+Las probabilidades de los 27 modelos ya están en `probabilidades/`, así que el paso 4 se puede correr directamente. Para comprobar que el código reproduce uno de los modelos sin reentrenar los 27, `3_modelos/verificar_semilla.py` reentrena la primera semilla de una corrida y la compara con la guardada:
 
 ```
 python 3_modelos/verificar_semilla.py historia corrida_1
@@ -41,7 +41,7 @@ python 3_modelos/verificar_semilla.py historia corrida_1
 
 ## Aclaración sobre las listas de features
 
-`listas_de_variables.py` tiene las dos listas fijas que usan los modelos: las 155 features base y las 40 variables con historia de 6 meses. En `2_seleccion_de_variables/` están los pasos con los que llegué a esas listas, en orden (`paso_1` a `paso_4`). Los dejé por si se quiere revisar cómo fue el proceso, pero no llegué a chequear si se reproducen antes de la entrega así que aún no puedo garantizar que llegue a exactamente el mismo resultado. 
+`listas_de_variables.py` tiene las dos listas fijas que usan los modelos: las 155 features base y las 40 variables con historia de 6 meses. En `2_seleccion_de_variables/` están ordenados los pasos con los que llegué a esas listas (`paso_1` a `paso_4`). Los dejé por si se quiere revisar cómo fue el proceso, pero no llegué a chequear si se reproducen antes de la entrega así que aún no puedo garantizar que produzcan exactamente el mismo resultado. 
 
 ## Carpetas
 
