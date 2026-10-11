@@ -1,4 +1,4 @@
-"""Features de comportamiento del cliente (ventana de 4 meses, solo mira hacia atrás).
+"""Features de comportamiento del cliente (ventana de 4 meses).
 
 1. Contra su propio pasado, para todas las variables: meses desde el máximo, racha de caídas, coeficiente de variación.
 2. Flujos de dinero del mes: entradas, salidas, salidas / entradas, saldo / entradas.
@@ -25,7 +25,7 @@ def _div(a, b):
 
 
 def intrames(df):
-    """Variables del mes (ideas 2, 3 y 4). df = crudo con todas las filas."""
+    """Variables del mes. df = crudo con todas las filas."""
     z = lambda c: _z(df, c)
     entradas = z("mpayroll") + z("mpayroll2") + z("mtransferencias_recibidas") + z("mcheques_depositados")
     salidas = (z("mtransferencias_emitidas") + z("mextraccion_autoservicio") + z("matm") + z("matm_other") + z("mpagodeservicios")
