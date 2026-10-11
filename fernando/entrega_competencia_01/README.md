@@ -10,7 +10,7 @@ Entrega final para la competencia 1: un ensamble a partir del promedio de las pr
 
 ## Qué modelos uso
 
-Entreno con marzo, abril, mayo y junio, con BAJA+1 y BAJA+2 como positivos. Todos los modelos usan los mismos hiperparámetros. Solo cambia la semilla.
+Entreno con marzo, abril, mayo y junio, con BAJA+1 y BAJA+2 como positivos. Todos los modelos usan los mismos hiperparámetros. Solo cambia la semilla. Los hiperparámetros son fijos (están en `3_modelos/comun.py`).
 
 Los 27 modelos se reparten en tres familias. Cada una agrega features a la anterior:
 
