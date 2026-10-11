@@ -76,7 +76,7 @@ nuevas["vinculos"] = np.sum([v.fillna(False).values for v in vinc], axis=0).asty
 df = pd.concat([df, pd.DataFrame(nuevas, index=df.index)], axis=1)
 print("variables nuevas:", len(nuevas), "| total features:", len(originales) + len(nuevas))
 
-# chequeos de no-fuga: el lag de 202103 tiene que estar vacío y el de un cliente debe ser su mes anterior
+# chequeo anti-leakage: el lag de 202103 tiene que estar vacío y el de un cliente debe ser su mes anterior
 assert df.loc[df.foto_mes == 202103, "ctrx_quarter_lag1"].isna().all()
 c = df.loc[df.foto_mes == 202105, "numero_de_cliente"].iloc[0]
 a = df[(df.numero_de_cliente == c)].set_index("foto_mes")
