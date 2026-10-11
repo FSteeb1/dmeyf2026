@@ -28,9 +28,9 @@ Usé Python 3.12.10 en Windows, con 4 núcleos (`num_threads = 4`) y las version
 pip install -r requirements.txt
 ```
 
-1. **Datos.** Bajar `competencia_01_crudo.csv` (https://storage.googleapis.com/open-courses/dmeyf2026-9c6f/competencia_01_crudo.csv) a la carpeta `data/` de la raíz del repo y correr `1_datos/construccion_target.ipynb`. Genera `data/competencia_01.csv` con `clase_ternaria`. El archivo que usé tiene este SHA-256: `5a33cf43d805f411bde1a65bc86e1df8311d2660c2b162e47f2a78985155b87d`.
+1. **Datos.** Correr `1_datos/construccion_target.ipynb`. Genera `data/competencia_01.csv` con `clase_ternaria`. El archivo que usé tiene este SHA-256: `5a33cf43d805f411bde1a65bc86e1df8311d2660c2b162e47f2a78985155b87d`.
 2. **Features de historia.** `python 1_datos/construir_historia.py`. Deja los parquet en `trabajo/historia/`.
-3. **Modelos.** En cada carpeta de `3_modelos/`, `python entrenar.py`. Cada familia se entrenó en varias corridas (están en `CORRIDAS`, dentro de cada `entrenar.py`). Cada corrida arma el dataset de LightGBM con la primera semilla que entrena, así que para obtener exactamente las mismas probabilidades hay que respetar las corridas y el orden de las semillas. Las probabilidades quedan en `probabilidades/`.
+3. **Modelos.** En cada carpeta de `3_modelos/`, `python entrenar.py`. Cada familia de modelos se entrenó en varias corridas (están en `CORRIDAS`, dentro de cada `entrenar.py`). Cada corrida arma el dataset de LightGBM con la primera semilla que entrena, así que para obtener exactamente las mismas probabilidades hay que respetar las corridas y el orden de las semillas. Las probabilidades quedan en `probabilidades/`.
 4. **Ensamble.** `python 4_ensamble/armar_ensamble.py`. Promedia los 27 modelos, toma los 11.000 clientes con mayor probabilidad (ante empate, por `numero_de_cliente`), valida el formato y compara el SHA-256 con el de la entrega.
 
 Las probabilidades de los 27 modelos ya están en `probabilidades/`, así que el paso 4 se puede correr directamente. Para comprobar que el código reproduce un modelo sin reentrenar los 27, `3_modelos/verificar_semilla.py` reentrena la primera semilla de una corrida y la compara con la guardada:
@@ -39,9 +39,9 @@ Las probabilidades de los 27 modelos ya están en `probabilidades/`, así que el
 python 3_modelos/verificar_semilla.py historia corrida_1
 ```
 
-## De dónde salen las listas de features
+## Aclaración sobre las listas de features
 
-`listas_de_variables.py` tiene las dos listas fijas que usan los modelos: las 155 features base y las 40 variables con historia de 6 meses. En `2_seleccion_de_variables/` están los pasos con los que llegué a esas listas, en orden (`paso_1` a `paso_4`). Los dejé por si se quiere revisar cómo fue el proceso, pero no pude chequear si se reproducen y no puedo garantizar que lleguen a los mismos resultados.
+`listas_de_variables.py` tiene las dos listas fijas que usan los modelos: las 155 features base y las 40 variables con historia de 6 meses. En `2_seleccion_de_variables/` están los pasos con los que llegué a esas listas, en orden (`paso_1` a `paso_4`). Los dejé por si se quiere revisar cómo fue el proceso, pero no llegué a chequear si se reproducen antes de la entrega así que aún no puedo garantizar que llegue a exactamente el mismo resultado. 
 
 ## Carpetas
 
