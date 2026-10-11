@@ -1,8 +1,8 @@
-"""Features de flujos de dinero desglosados (ventana de 4 meses, solo mira hacia atrás).
+"""Features de flujos de dinero (4 meses).
 
 1. Entradas por tipo (sueldo, transferencias, cheques) y salidas por tipo (transferencias, cajero, débitos automáticos,
-   pagos de servicios, cheques). Neto = entradas - salidas, y neto acumulado en la ventana.
-2. Para entradas, salidas y neto: tendencia, actual / máximo y actual / promedio de la ventana.
+   pagos de servicios, cheques). Neto = entradas - salidas, y neto acumulado en la ventana de tiempo.
+2. Para entradas, salidas y neto: tendencia, actual / máximo y actual / promedio de la ventana de tiempo.
 3. Qué producto dejó de tener (lo tuvo en la ventana y hoy no).
 """
 import numpy as np
