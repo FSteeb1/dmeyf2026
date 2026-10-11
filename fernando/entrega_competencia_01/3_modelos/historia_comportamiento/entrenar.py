@@ -3,7 +3,6 @@
 Uso:
     python entrenar.py                 corre todas las corridas, en orden
     python entrenar.py --corrida corrida_2    corre solo esa corrida
-Opcional: --historia CARPETA, si los parquet de 1_datos/construir_historia.py quedaron en otra carpeta.
 """
 import argparse
 import os
