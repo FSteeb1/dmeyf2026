@@ -192,3 +192,4 @@ project/target
 uv.lock
 
 monday/models/*
+*.cmd
