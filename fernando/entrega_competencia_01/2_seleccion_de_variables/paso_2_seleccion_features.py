@@ -36,7 +36,7 @@ cand = [f for f in features if f not in sin_uso]
 muestra = df[df.foto_mes.isin([202103, 202104])].sample(100_000, random_state=SEMILLA)[cand]
 const = [c for c in cand if muestra[c].nunique(dropna=True) <= 1]
 cand = [c for c in cand if c not in const]
-corr = muestra[cand].rank().corr(method="pearson").abs()   # Spearman = Pearson sobre rangos
+corr = muestra[cand].rank().corr(method="pearson").abs()  
 orden = sorted(cand, key=lambda f: (tipo(f), -imp[f]))
 def r_no_ceros(a, b):
     """Spearman solo en filas donde al menos una de las dos es distinta de 0 (y ninguna NaN).
@@ -51,8 +51,8 @@ quedan, sacadas, descartes_por_ceros = [], [], []
 for f in orden:
     par, r = None, None
     for q in quedan:
-        if corr.loc[f, q] > UMBRAL:            # candidato por correlación global...
-            rr = r_no_ceros(f, q)              # ...confirmado solo si sigue alto sin los ceros
+        if corr.loc[f, q] > UMBRAL:            
+            rr = r_no_ceros(f, q)             
             if rr > UMBRAL: par, r = q, rr; break
             descartes_por_ceros.append((f, q, round(corr.loc[f, q], 3), round(rr, 3)))
     if par is None: quedan.append(f)
