@@ -5,7 +5,7 @@ Entrega final para la competencia 1: un ensamble a partir del promedio de las pr
 | | |
 |---|---|
 | Archivo | `4_ensamble/salida/prediccion_final.csv` (lo genera `armar_ensamble.py`) |
-| Clientes | 11.000, sin encabezado, uno por línea |
+| Clientes | 11.000 |
 | SHA-256 | `2a5a508683301735e4f4b5ab07ccc50c102459479691baf9211e68c3e496663a` |
 
 ## Descripción del ensamble final
