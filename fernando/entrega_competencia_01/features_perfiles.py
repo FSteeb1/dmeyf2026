@@ -1,7 +1,7 @@
-"""Features de perfiles: lags, deltas y ratio de 1 y 2 meses para 21 variables, señales de baja y cantidad de vínculos.
+"""Features de perfiles: lags, deltas y ratio de 1 y 2 meses para 21 variables, señales de baja y cantidad de vínculos con el banco.
 
 agregar_features(df) devuelve (df con las features, lista de features nuevas).
-Los lags se toman por mes calendario: si el cliente no estaba ese mes, quedan vacíos.
+Los lags se toman por mes calendario. Quedan vacíos si el cliente no está ese mes.
 """
 import numpy as np
 import pandas as pd
