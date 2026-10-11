@@ -1,10 +1,10 @@
 """Features de historia para todas las variables numéricas (prefijo h_).
 
-- lag1, lag2: valor de hace 1 y 2 meses (mismo cliente, mes calendario exacto; si no estaba, queda NA)
+- lag1, lag2: valor de hace 1 y 2 meses (mismo cliente, si no estaba en ese mes -> queda NA)
 - delta1, delta2: valor actual menos el lag
 - en la ventana del mes actual y hasta 5 anteriores: tend (pendiente), min, max, ratioavg (actual / promedio),
   ratiomax (actual / máximo)
-Solo mira hacia atrás. Se calcula por bloques de columnas y se guarda en parquet (float32) para no agotar la memoria.
+Se calcula por bloques de columnas y se guarda en parquet (float32), tuve que hacerlo así para no agotar la RAM de mi PC.
 Las divisiones por cero quedan NA.
 """
 import os
