@@ -41,7 +41,7 @@ python 3_modelos/verificar_semilla.py historia corrida_1
 
 ## Aclaración sobre las listas de features
 
-`listas_de_variables.py` tiene las dos listas fijas que usan los modelos: las 155 features base y las 40 variables con historia de 6 meses. En `2_seleccion_de_variables/` están ordenados los pasos con los que llegué a esas listas (`paso_1` a `paso_4`). Los dejé por si se quiere revisar cómo fue el proceso, pero no llegué a chequear si se reproducen antes de la entrega así que aún no puedo garantizar que produzcan exactamente el mismo resultado. 
+`listas_de_variables.py` tiene las dos listas fijas que usan los modelos: las 155 features base y las 40 variables con historia de 6 meses. En `2_seleccion_de_variables/` están ordenados los pasos con los que llegué a esas listas (`paso_1` a `paso_4`). Los dejé por si se quiere revisar cómo fue el proceso.
 
 ## Carpetas
 
