@@ -28,7 +28,7 @@ Usé Python 3.12.10 en Windows, con 4 núcleos (`num_threads = 4`) y las version
 pip install -r requirements.txt
 ```
 
-1. **Datos.** Correr `1_datos/construccion_target.ipynb`. Genera `data/competencia_01.csv` con `clase_ternaria`. El archivo que usé tiene este SHA-256: `5a33cf43d805f411bde1a65bc86e1df8311d2660c2b162e47f2a78985155b87d`.
+1. **Datos.** Correr `1_datos/construccion_target.ipynb`. Genera `data/competencia_01.csv` con `clase_ternaria`. Después correr `python 1_datos/ordenar_filas.py`, que deja las filas en el orden con el que entrené (abajo aclaro qué pasó) y verifica que el archivo quede con este SHA-256: `5a33cf43d805f411bde1a65bc86e1df8311d2660c2b162e47f2a78985155b87d`.
 2. **Features de historia.** `python 1_datos/construir_historia.py`. Deja los parquet en `trabajo/historia/`.
 3. **Modelos.** En cada carpeta de `3_modelos/`, `python entrenar.py`. Cada familia de modelos se entrenó en varias corridas (están en `CORRIDAS`, dentro de cada `entrenar.py`). Cada corrida arma el dataset de LightGBM con la primera semilla que entrena, así que para obtener exactamente las mismas probabilidades hay que respetar las corridas y el orden de las semillas. Las probabilidades quedan en `probabilidades/`.
 4. **Ensamble.** `python 4_ensamble/armar_ensamble.py`. Promedia los 27 modelos, toma los 11.000 clientes con mayor probabilidad (ante empate, por `numero_de_cliente`), valida el formato y compara el SHA-256 con el de la entrega.
@@ -39,6 +39,12 @@ Las probabilidades de los 27 modelos ya están en `probabilidades/`, así que el
 python 3_modelos/verificar_semilla.py historia corrida_1
 ```
 
+## Orden de las filas
+
+Había generado el target con DuckDB, que al parecer puede generar las filas en distintos órdenes en cada corrida, lo cual lógicamente puede alterar las probabilidades de los modelos. Por eso:
+
+`1_datos/orden_filas.csv.gz` tiene `numero_de_cliente` y `foto_mes` de cada fila, en el orden del archivo que usé. `ordenar_filas.py` reescribe `data/competencia_01.csv` en ese orden, y el archivo queda idéntico al original.
+
 ## Aclaración sobre las listas de features
 
 `listas_de_variables.py` tiene las dos listas fijas que usan los modelos: las 155 features base y las 40 variables con historia de 6 meses. En `2_seleccion_de_variables/` están ordenados los pasos con los que llegué a esas listas (`paso_1` a `paso_4`). Los dejé por si se quiere revisar cómo fue el proceso.
@@ -46,7 +52,7 @@ python 3_modelos/verificar_semilla.py historia corrida_1
 ## Carpetas
 
 ```
-1_datos/                      clase_ternaria y features de historia
+1_datos/                      clase_ternaria, orden de las filas y features de historia
 2_seleccion_de_variables/     pasos con los que armé las listas de features
 3_modelos/                    comun.py y una carpeta por familia, con su entrenar.py
 4_ensamble/                   promedio de los 27 modelos, corte y verificación
